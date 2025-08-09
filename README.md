@@ -313,6 +313,49 @@ The system is designed for scalability:
 - **CDN Integration** - Asset delivery optimization
 - **Queue Management** - Background job processing for long-running tasks
 
+## 🛠️ Management Scripts
+
+The project includes several management scripts for easy operation:
+
+### **Start Script** (`./start.sh`)
+- Automatically checks prerequisites
+- Sets up environment and dependencies
+- Starts both backend and frontend services
+- Provides health checks and status
+
+### **Stop Script** (`./stop.sh`)
+- Gracefully shuts down all services
+- Kills processes on all relevant ports
+- Cleans up temporary files
+- Provides detailed status reporting
+
+### **Status Script** (`./status.sh`)
+- Comprehensive service status check
+- Tests all endpoints and ports
+- Shows running processes
+- Provides access URLs and troubleshooting tips
+
+### **Port Conflict Resolution** (`./fix_port_conflict.sh`)
+- Automatically detects port conflicts
+- Kills conflicting processes
+- Starts services on available ports
+- Handles macOS AirPlay Receiver conflicts
+
+### **Usage Examples:**
+```bash
+# Start the application
+./start.sh
+
+# Check current status
+./status.sh
+
+# Stop all services
+./stop.sh
+
+# Fix port conflicts and start
+./fix_port_conflict.sh
+```
+
 ## 🆘 Troubleshooting
 
 ### Common Issues
@@ -359,8 +402,7 @@ The system is designed for scalability:
 **Reset Everything:**
 ```bash
 # Stop all services
-pkill -f "python src/main.py"
-pkill -f "npm run dev"
+./stop.sh
 
 # Clean and restart
 rm -rf backend/venv
@@ -370,13 +412,12 @@ rm -rf frontend/node_modules
 
 **Check Service Status:**
 ```bash
-# Backend health
-curl http://localhost:5000/health
+# Comprehensive status check
+./status.sh
 
-# Frontend status
-curl http://localhost:3000
-
-# Database status
+# Individual service checks
+curl http://localhost:5001/health
+curl http://localhost:5173
 ls -la backend/src/database/
 ```
 
