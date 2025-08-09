@@ -11,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api'
 
   useEffect(() => {
     checkBackendHealth()
@@ -20,7 +20,7 @@ function App() {
 
   const checkBackendHealth = async () => {
     try {
-      const response = await fetch('http://localhost:5000/health')
+      const response = await fetch('http://localhost:5001/health')
       const data = await response.json()
       setHealthStatus(data)
     } catch (err) {

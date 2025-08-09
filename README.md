@@ -96,8 +96,8 @@ The system consists of five main components:
 
 5. **Access the application:**
    - Frontend Dashboard: http://localhost:5173 (or http://localhost:3000)
-   - Backend API: http://localhost:5000
-   - Health Check: http://localhost:5000/health
+   - Backend API: http://localhost:5001
+   - Health Check: http://localhost:5001/health
 
 ## 📁 Project Structure
 

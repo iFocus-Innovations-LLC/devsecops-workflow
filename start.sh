@@ -106,8 +106,8 @@ start_backend() {
     sleep 3
     
     # Check if backend is running
-    if curl -s http://localhost:5000/health > /dev/null 2>&1; then
-        print_success "Backend server started successfully on http://localhost:5000"
+    if curl -s http://localhost:5001/health > /dev/null 2>&1; then
+        print_success "Backend server started successfully on http://localhost:5001"
         return 0
     else
         print_error "Backend server failed to start"
@@ -175,9 +175,9 @@ if start_backend; then
     if start_frontend; then
         print_success "🎉 DevSecOps Video Workflow is now running!"
         echo ""
-        echo "📊 Backend API: http://localhost:5000"
+        echo "📊 Backend API: http://localhost:5001"
         echo "🎨 Frontend UI: http://localhost:5173 (or http://localhost:3000)"
-        echo "🔍 Health Check: http://localhost:5000/health"
+        echo "🔍 Health Check: http://localhost:5001/health"
         echo ""
         echo "Press Ctrl+C to stop all services"
         echo ""
