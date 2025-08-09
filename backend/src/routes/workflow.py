@@ -260,7 +260,7 @@ def publish_videos():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@workflow_bp.route('/workflow/status', methods=['GET'])
+@workflow_bp.route('/status', methods=['GET'])
 def get_workflow_status():
     """Get overall workflow status"""
     try:
@@ -312,7 +312,7 @@ def get_workflow_status():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@workflow_bp.route('/workflow/run-full', methods=['POST'])
+@workflow_bp.route('/run-full', methods=['POST'])
 def run_full_workflow():
     """Run the complete workflow from content planning to publishing"""
     try:

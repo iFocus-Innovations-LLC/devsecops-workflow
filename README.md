@@ -28,12 +28,15 @@ The system consists of five main components:
 
 - Python 3.8+
 - Node.js 18+
+- npm or pnpm
 - FFmpeg (for video processing)
 - Git
-- YouTube Data API credentials
+- YouTube Data API credentials (optional)
 - GitHub API token (optional, for enhanced topic discovery)
 
-### Installation
+### Installation & Running
+
+**Option 1: Automated Setup (Recommended)**
 
 1. **Clone the repository:**
    ```bash
@@ -41,50 +44,60 @@ The system consists of five main components:
    cd devsecops-workflow
    ```
 
-2. **Set up the backend:**
+2. **Run the automated startup script:**
+   ```bash
+   ./start.sh
+   ```
+
+   This script will:
+   - Check all prerequisites
+   - Create virtual environment if needed
+   - Install all dependencies
+   - Start both backend and frontend servers
+   - Provide health checks and status
+
+**Option 2: Manual Setup**
+
+1. **Set up the backend:**
    ```bash
    cd backend
-   python -m venv venv
+   python3 -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
-3. **Set up the frontend:**
+2. **Set up the frontend:**
    ```bash
    cd ../frontend
    npm install
    ```
 
-4. **Configure environment variables:**
+3. **Configure environment variables:**
    ```bash
-   # Create .env file in the root directory
-   cp .env.example .env
+   # Copy the example environment file
+   cp env.example .env
    # Edit .env with your API keys and configuration
    ```
 
-5. **Initialize databases:**
-   ```bash
-   cd scripts
-   python content_planner.py  # Creates initial database structure
-   ```
+4. **Start the services:**
 
-### Running the Application
-
-1. **Start the backend:**
+   **Terminal 1 - Backend:**
    ```bash
    cd backend
    source venv/bin/activate
    python src/main.py
    ```
 
-2. **Start the frontend:**
+   **Terminal 2 - Frontend:**
    ```bash
    cd frontend
    npm run dev
    ```
 
-3. **Access the dashboard:**
-   Open http://localhost:3000 in your browser
+5. **Access the application:**
+   - Frontend Dashboard: http://localhost:5173 (or http://localhost:3000)
+   - Backend API: http://localhost:5001
+   - Health Check: http://localhost:5001/health
 
 ## 📁 Project Structure
 
@@ -304,6 +317,28 @@ The system is designed for scalability:
 
 ### Common Issues
 
+**Backend Connection Issues:**
+- Ensure Python 3.8+ is installed: `python3 --version`
+- Check if virtual environment is activated: `source backend/venv/bin/activate`
+- Verify Flask server is running: `curl http://localhost:5000/health`
+- Check for port conflicts: `lsof -i :5000`
+
+**Frontend Connection Issues:**
+- Ensure Node.js 18+ is installed: `node --version`
+- Check if dependencies are installed: `cd frontend && npm install`
+- Verify Vite server is running: `curl http://localhost:3000`
+- Check for port conflicts: `lsof -i :3000`
+
+**Database Issues:**
+- Ensure database directory exists: `mkdir -p backend/src/database`
+- Check database permissions: `ls -la backend/src/database/`
+- Reset database if corrupted: `rm backend/src/database/app.db`
+
+**Environment Configuration:**
+- Copy environment file: `cp env.example .env`
+- Edit API keys in `.env` file
+- Restart services after environment changes
+
 **YouTube Upload Failures:**
 - Verify API credentials and quota limits
 - Check video file format and size restrictions
@@ -318,6 +353,32 @@ The system is designed for scalability:
 - Verify FFmpeg installation and PATH configuration
 - Check available disk space for asset storage
 - Validate audio/video codec support
+
+### Quick Fixes
+
+**Reset Everything:**
+```bash
+# Stop all services
+pkill -f "python src/main.py"
+pkill -f "npm run dev"
+
+# Clean and restart
+rm -rf backend/venv
+rm -rf frontend/node_modules
+./start.sh
+```
+
+**Check Service Status:**
+```bash
+# Backend health
+curl http://localhost:5000/health
+
+# Frontend status
+curl http://localhost:3000
+
+# Database status
+ls -la backend/src/database/
+```
 
 ### Support
 
