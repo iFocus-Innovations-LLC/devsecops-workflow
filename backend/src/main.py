@@ -15,11 +15,11 @@ from src.models.user import db
 from src.routes.user import user_bp
 from src.routes.workflow import workflow_bp
 
-app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), 'static'))
+app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'asdf#FGSgvasgf$5$WGT')
 
 # Enable CORS for frontend
-CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:3000'])
+CORS(app, origins=['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000', 'http://127.0.0.1:5173'])
 
 # Database configuration
 database_path = os.path.join(os.path.dirname(__file__), 'database', 'app.db')
@@ -46,24 +46,15 @@ def health_check():
         'version': '1.0.0'
     })
 
-# Serve the React app for all other routes
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    static_folder_path = app.static_folder
-    if static_folder_path is None:
-        return "Static folder not configured", 404
-
-    # Serve static files if they exist
-    if path != "" and os.path.exists(os.path.join(static_folder_path, path)):
-        return send_from_directory(static_folder_path, path)
-    else:
-        # Serve index.html for all other routes (React Router will handle routing)
-        index_path = os.path.join(static_folder_path, 'index.html')
-        if os.path.exists(index_path):
-            return send_from_directory(static_folder_path, 'index.html')
-        else:
-            return "index.html not found", 404
+@app.route('/')
+def root():
+    """Root endpoint - redirect to frontend"""
+    return jsonify({
+        'message': 'DevSecOps Workflow API',
+        'frontend': 'http://localhost:5173',
+        'health': 'http://localhost:5001/health',
+        'api_docs': 'http://localhost:5001/api'
+    })
 
 
 if __name__ == '__main__':
