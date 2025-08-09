@@ -443,4 +443,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ by iFocus Innovations LLC**
 
-For more information, visit our [website](https://ifocus-innovations.com) or contact us at [support@ifocus-innovations.com](mailto:support@ifocus-innovations.com).
+For more information, visit our [website](https://ifocusinnovations.com) or contact us at [Support](mailto:kevin.griesmae@ifocusinnovations.com).
